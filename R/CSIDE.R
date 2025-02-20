@@ -709,8 +709,8 @@ fit_de_genes <- function(X1,X2,my_beta, nUMI, gene_list, puck, barcodes, sigma_i
       results_list[[i]] <- estimate_gene_wrapper(Y,X1,X2,my_beta, nUMI, sigma_init, test_mode, verbose = F, n.iter = 200, MIN_CHANGE = 1e-3, sigma_gene = sigma_gene, PRECISION.THRESHOLD = PRECISION.THRESHOLD)
     }
   } else {
-    cl <- parallel::makeCluster(numCores,setup_strategy = "sequential",outfile="") #makeForkCluster
-    doParallel::registerDoParallel(cl)
+    #cl <- parallel::makeCluster(numCores,setup_strategy = "sequential",outfile="") #makeForkCluster
+    #doParallel::registerDoParallel(cl)
     environ = c('estimate_effects_trust', 'solveIRWLS.effects_trust', 'K_val','X_vals',
                 'calc_log_l_vec', 'get_d1_d2', 'calc_Q_all','psd','construct_hess_fast',
                 'choose_sigma_gene', 'estimate_gene_wrapper', 'check_converged_vec', 'calc_log_l_vec_fast')
@@ -742,7 +742,7 @@ fit_de_genes <- function(X1,X2,my_beta, nUMI, gene_list, puck, barcodes, sigma_i
       Y <- puck@counts[gene, barcodes]
       res <- estimate_gene_wrapper(Y,X1,X2,my_beta, nUMI, sigma_init, test_mode, verbose = F, n.iter = 200, MIN_CHANGE = 1e-3, sigma_gene = sigma_gene)
     }
-    parallel::stopCluster(cl)
+    #parallel::stopCluster(cl)
   }
   return(results_list)
 }
